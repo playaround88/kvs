@@ -13,6 +13,12 @@ pub enum KvsError {
   /// Initial log error.
   #[fail(display = "{}", _0)]
   Log(#[cause] log::SetLoggerError),
+  /// sled error
+  #[fail(display = "{}", _0)]
+  Sled(#[cause] sled::Error),
+  /// utf-8 error
+  #[fail(display = "{}", 0)]
+  Utf8(#[cause] std::string::FromUtf8Error),
   /// Removing non-existent key error.
   #[fail(display = "Key not found")]
   KeyNotFound,
@@ -37,6 +43,18 @@ impl From<serde_json::Error> for KvsError {
 impl From<log::SetLoggerError> for KvsError {
   fn from(err: log::SetLoggerError) -> KvsError {
     KvsError::Log(err)
+  }
+}
+
+impl From<sled::Error> for KvsError {
+  fn from(err: sled::Error) -> KvsError {
+    KvsError::Sled(err)
+  }
+}
+
+impl From<std::string::FromUtf8Error> for KvsError {
+  fn from(err: std::string::FromUtf8Error) -> KvsError {
+    KvsError::Utf8(err)
   }
 }
 

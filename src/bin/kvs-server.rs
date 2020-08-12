@@ -1,5 +1,5 @@
-use kvs::{KvsEngine, Result};
-use std::env;
+use kvs::{KvStore, KvsEngine, Result};
+use std::env::current_dir;
 use std::io::{Read, Write};
 use std::net::{Shutdown, TcpListener, TcpStream};
 
@@ -59,13 +59,9 @@ fn main() -> Result<()> {
     info!("use engine: {}", engine);
 
     info!("init store engine...");
-    /*
-        let mut store: impl KvsEngine;
-        if engine.eq_ignore_ascii_case("sled") {
-        } else {
-            store = KvStore::open(current_dir()?)?;
-        }
-    */
+
+    let mut store = KvStore::open(current_dir()?)?;
+
     info!("start server listener:{}", addr);
     let listener = TcpListener::bind(addr)?;
     for stream in listener.incoming() {
