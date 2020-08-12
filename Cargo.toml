@@ -5,16 +5,18 @@ authors = ["wutb <wutb@asiainfo.com>"]
 edition = "2018"
 description = "A key-value store"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 clap = {version = "~2.33.1", features = ["yaml"]}
 failure = "0.1.5"
 serde = { version = "1.0.89", features = ["derive"] }
 serde_json = "1.0.39"
+log = { version = "0.4.11", features = ["max_level_debug", "release_max_level_warn"] }
+stderrlog = "0.4.3"
 
 [dev-dependencies]
-assert_cmd = "0.11.0"
+assert_cmd = "0.11"
+criterion = "0.2.11"
 predicates = "1.0.0"
+rand = "0.6.5"
 tempfile = "3.0.7"
 walkdir = "2.2.7"
